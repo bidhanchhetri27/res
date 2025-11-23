@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV - Bimal Basnett</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&family=Open+Sans:wght@400;600;700&display=swap');
+
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #34495e;
+            --accent-color: #3498db;
+            --text-color: #333;
+            --bg-color: #f4f4f4;
+            --white: #ffffff;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        /* A4 Paper Mockup */
+        .cv-container {
+            width: 210mm;
+            min-height: 297mm; /* A4 height */
+            background: var(--white);
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+            display: grid;
+            grid-template-columns: 30% 70%;
+            overflow: hidden; /* Ensures borders don't spill */
+        }
+
+        /* Left Sidebar */
+        .sidebar {
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 30px 20px;
+            text-align: center;
+        }
+
+        .photo-frame {
+            width: 150px;
+            height: 180px;
+            background-color: #ecf0f1;
+            margin: 0 auto 20px auto;
+            border: 4px solid rgba(255,255,255,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .photo-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .photo-placeholder-text {
+            color: #7f8c8d;
+            font-size: 0.8rem;
+        }
+
+        .sidebar-section {
+            margin-bottom: 30px;
+            text-align: left;
+        }
+
+        .sidebar-title {
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 1px solid rgba(255,255,255,0.3);
+            padding-bottom: 5px;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .contact-info p, .personal-info p {
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+            word-wrap: break-word;
+        }
+
+        .skill-tag {
+            background-color: rgba(255,255,255,0.1);
+            padding: 5px 10px;
+            margin-bottom: 8px;
+            display: block;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+
+        /* Right Content Area */
+        .main-content {
+            padding: 40px;
+        }
+
+        .header {
+            margin-bottom: 30px;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 10px;
+        }
+
+        .name {
+            font-family: 'Merriweather', serif;
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+
+        .tagline {
+            font-size: 1.1rem;
+            color: var(--accent-color);
+            margin-top: 5px;
+            font-weight: 600;
+        }
+
+        .content-section {
+            margin-bottom: 25px;
+        }
+
+        .section-title {
+            font-family: 'Merriweather', serif;
+            font-size: 1.3rem;
+            color: var(--secondary-color);
+            border-left: 4px solid var(--accent-color);
+            padding-left: 10px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+
+        .objective-text {
+            text-align: justify;
+            color: #444;
+        }
+
+        /* Education Table Style */
+        .education-item {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px dashed #ddd;
+        }
+
+        .education-item:last-child {
+            border-bottom: none;
+        }
+
+        .edu-degree {
+            font-weight: 700;
+            font-size: 1.05rem;
+            color: var(--primary-color);
+        }
+
+        .edu-school {
+            font-style: italic;
+            color: #555;
+        }
+
+        .edu-meta {
+            font-size: 0.9rem;
+            color: #777;
+            display: flex;
+            justify-content: space-between;
+            margin-top: 3px;
+        }
+
+        .score-badge {
+            font-weight: 600;
+            color: var(--accent-color);
+        }
+
+        .declaration {
+            margin-top: 40px;
+            font-size: 0.9rem;
+            color: #555;
+        }
+
+        .signature-area {
+            margin-top: 40px;
+            display: flex;
+            justify-content: space-between;
+            font-weight: 600;
+        }
+
+        /* Print Settings */
+        @media print {
+            body {
+                background: none;
+                padding: 0;
+            }
+            .cv-container {
+                width: 100%;
+                box-shadow: none;
+                min-height: auto;
+            }
+            /* Ensure background colors print */
+            .sidebar {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+        }
+        
+        /* Responsive for mobile viewing */
+        @media (max-width: 768px) {
+            .cv-container {
+                grid-template-columns: 1fr;
+                width: 100%;
+                min-height: auto;
+            }
+            .sidebar {
+                padding: 20px;
+            }
+            .main-content {
+                padding: 20px;
+            }
+            .photo-frame {
+                margin-bottom: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="cv-container">
+        <!-- Left Sidebar -->
+        <aside class="sidebar">
+            <!-- Photo Section -->
+            <div class="photo-frame">
+                <!-- IMPORTANT: Ensure your image file is named exactly 'bimal pass photo.jpg' -->
+                <img src="bimal pass photo.jpg" alt="Bimal Basnett" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
+                <div class="photo-placeholder-text" style="display:none; padding: 15px; font-size: 0.75rem;">
+                    Photo not visible?<br><br>
+                    Save this file and "bimal pass photo.jpg" in the same folder.
+                </div>
+            </div>
+
+            <div class="sidebar-section contact-info">
+                <h3 class="sidebar-title">Contact</h3>
+                <p><strong>Address:</strong><br>Lower Tanak, Temi Tarku,<br>Namchi, Sikkim</p>
+                <p><strong>Phone:</strong><br>+91 6295 055 872</p>
+                <p><strong>Nationality:</strong><br>Indian</p>
+            </div>
+
+            <div class="sidebar-section personal-info">
+                <h3 class="sidebar-title">Personal Info</h3>
+                <p><strong>DOB:</strong> 03 May 2003</p>
+                <p><strong>Languages:</strong><br>Nepali, English, Hindi</p>
+            </div>
+
+            <div class="sidebar-section skills">
+                <h3 class="sidebar-title">Skills</h3>
+                <span class="skill-tag">Mathematical Analysis</span>
+                <span class="skill-tag">Problem Solving</span>
+                <span class="skill-tag">Logical Reasoning</span>
+                <span class="skill-tag">Data Interpretation</span>
+            </div>
+
+             <div class="sidebar-section interests">
+                <h3 class="sidebar-title">Hobbies</h3>
+                <span class="skill-tag">Chess (Competitive)</span>
+                <span class="skill-tag">Strategic Games</span>
+            </div>
+        </aside>
+
+        <!-- Right Main Content -->
+        <main class="main-content">
+            <header class="header">
+                <h1 class="name">Bimal Basnett</h1>
+                <p class="tagline">B.Sc. Mathematics Graduate</p>
+            </header>
+
+            <section class="content-section">
+                <h2 class="section-title">Career Objective</h2>
+                <p class="objective-text">
+                    Analytical and disciplined Mathematics graduate with a strong academic track record. Eager to apply mathematical principles, logical reasoning, and problem-solving skills in a professional environment that encourages growth and challenges.
+                </p>
+            </section>
+
+            <section class="content-section">
+                <h2 class="section-title">Education</h2>
+                
+                <div class="education-item">
+                    <div class="edu-degree">B.Sc. Mathematics</div>
+                    <div class="edu-school">Sikkim Govt. College, Namchi (Sikkim University)</div>
+                    <div class="edu-meta">
+                        <span>Graduated</span>
+                        <span class="score-badge">CGPA: 8.11</span>
+                    </div>
+                </div>
+
+                <div class="education-item">
+                    <div class="edu-degree">Senior Secondary (Class XII) - PCMB</div>
+                    <div class="edu-school">Temi Senior Secondary School (CBSE)</div>
+                    <div class="edu-meta">
+                        <span>Completed</span>
+                        <span class="score-badge">78%</span>
+                    </div>
+                </div>
+
+                <div class="education-item">
+                    <div class="edu-degree">Secondary (Class X)</div>
+                    <div class="edu-school">Tarku Secondary School (CBSE)</div>
+                    <div class="edu-meta">
+                        <span>Completed</span>
+                        <span class="score-badge">71.4%</span>
+                    </div>
+                </div>
+
+                <div class="education-item">
+                    <div class="edu-degree">Junior High School</div>
+                    <div class="edu-school">Saipatri Sishu Mandir School</div>
+                    <div class="edu-meta">
+                        <span>Completed</span>
+                        <span>-</span>
+                    </div>
+                </div>
+            </section>
+
+            <section class="content-section">
+                <h2 class="section-title">Key Strengths</h2>
+                <ul style="padding-left: 20px; color: #444;">
+                    <li>Strong foundation in Calculus, Algebra, and Statistics.</li>
+                    <li>Excellent concentration and strategic planning skills developed through Chess.</li>
+                    <li>Consistent academic improvement and dedication to learning.</li>
+                </ul>
+            </section>
+
+            <section class="declaration">
+                <h2 class="section-title">Declaration</h2>
+                <p>I hereby declare that the information provided above is true and correct to the best of my knowledge and belief.</p>
+                
+                <div class="signature-area">
+                    <div>
+                        Date: ........................<br>
+                        Place: Namchi, Sikkim
+                    </div>
+                    <div style="text-align: right;">
+                        <br>
+                        (Bimal Basnett)
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+</body>
+</html>
