@@ -1,362 +1,272 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CV - Bimal Basnett</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&family=Open+Sans:wght@400;600;700&display=swap');
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Advanced Multi-Dimensional Plotter</title>
+  
+  <script src="https://cdn.plot.ly/plotly-2.24.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.8.0/math.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
 
-        :root {
-            --primary-color: #2c3e50;
-            --secondary-color: #34495e;
-            --accent-color: #3498db;
-            --text-color: #333;
-            --bg-color: #f4f4f4;
-            --white: #ffffff;
-        }
+  <style>
+    :root { --primary: #2563eb; --bg: #f8fafc; --panel: #ffffff; --text: #1e293b; --border: #e2e8f0; }
+    * { box-sizing: border-box; font-family: 'Inter', system-ui, sans-serif; }
+    body { margin: 0; display: flex; height: 100vh; background: var(--bg); color: var(--text); }
+    
+    /* Sidebar UI */
+    .sidebar { width: 320px; background: var(--panel); border-right: 1px solid var(--border); padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 20px; }
+    h2 { font-size: 1.2rem; margin: 0 0 10px 0; color: var(--primary); }
+    
+    .control-group { display: flex; flex-direction: column; gap: 8px; }
+    label { font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: #64748b; }
+    input[type="text"], select { padding: 10px; border: 1px solid var(--border); border-radius: 6px; font-size: 14px; outline: none; }
+    input[type="text"]:focus, select:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(37,99,235,0.1); }
+    
+    button { padding: 12px; background: var(--primary); color: white; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; transition: 0.2s; }
+    button:hover { background: #1d4ed8; }
+    button.secondary { background: #e2e8f0; color: var(--text); }
+    button.secondary:hover { background: #cbd5e1; }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            font-family: 'Open Sans', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            line-height: 1.6;
-            display: flex;
-            justify-content: center;
-            padding: 20px;
-        }
-
-        /* A4 Paper Mockup */
-        .cv-container {
-            width: 210mm;
-            min-height: 297mm; /* A4 height */
-            background: var(--white);
-            box-shadow: 0 0 15px rgba(0,0,0,0.1);
-            display: grid;
-            grid-template-columns: 30% 70%;
-            overflow: hidden; /* Ensures borders don't spill */
-        }
-
-        /* Left Sidebar */
-        .sidebar {
-            background-color: var(--primary-color);
-            color: var(--white);
-            padding: 30px 20px;
-            text-align: center;
-        }
-
-        .photo-frame {
-            width: 150px;
-            height: 180px;
-            background-color: #ecf0f1;
-            margin: 0 auto 20px auto;
-            border: 4px solid rgba(255,255,255,0.2);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-        }
-
-        .photo-frame img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .photo-placeholder-text {
-            color: #7f8c8d;
-            font-size: 0.8rem;
-        }
-
-        .sidebar-section {
-            margin-bottom: 30px;
-            text-align: left;
-        }
-
-        .sidebar-title {
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            border-bottom: 1px solid rgba(255,255,255,0.3);
-            padding-bottom: 5px;
-            margin-bottom: 15px;
-            font-size: 1.1rem;
-            font-weight: 600;
-        }
-
-        .contact-info p, .personal-info p {
-            margin-bottom: 10px;
-            font-size: 0.9rem;
-            word-wrap: break-word;
-        }
-
-        .skill-tag {
-            background-color: rgba(255,255,255,0.1);
-            padding: 5px 10px;
-            margin-bottom: 8px;
-            display: block;
-            border-radius: 4px;
-            font-size: 0.9rem;
-        }
-
-        /* Right Content Area */
-        .main-content {
-            padding: 40px;
-        }
-
-        .header {
-            margin-bottom: 30px;
-            border-bottom: 2px solid var(--primary-color);
-            padding-bottom: 10px;
-        }
-
-        .name {
-            font-family: 'Merriweather', serif;
-            font-size: 2.5rem;
-            color: var(--primary-color);
-            text-transform: uppercase;
-            font-weight: 700;
-        }
-
-        .tagline {
-            font-size: 1.1rem;
-            color: var(--accent-color);
-            margin-top: 5px;
-            font-weight: 600;
-        }
-
-        .content-section {
-            margin-bottom: 25px;
-        }
-
-        .section-title {
-            font-family: 'Merriweather', serif;
-            font-size: 1.3rem;
-            color: var(--secondary-color);
-            border-left: 4px solid var(--accent-color);
-            padding-left: 10px;
-            margin-bottom: 15px;
-            text-transform: uppercase;
-        }
-
-        .objective-text {
-            text-align: justify;
-            color: #444;
-        }
-
-        /* Education Table Style */
-        .education-item {
-            margin-bottom: 15px;
-            padding-bottom: 15px;
-            border-bottom: 1px dashed #ddd;
-        }
-
-        .education-item:last-child {
-            border-bottom: none;
-        }
-
-        .edu-degree {
-            font-weight: 700;
-            font-size: 1.05rem;
-            color: var(--primary-color);
-        }
-
-        .edu-school {
-            font-style: italic;
-            color: #555;
-        }
-
-        .edu-meta {
-            font-size: 0.9rem;
-            color: #777;
-            display: flex;
-            justify-content: space-between;
-            margin-top: 3px;
-        }
-
-        .score-badge {
-            font-weight: 600;
-            color: var(--accent-color);
-        }
-
-        .declaration {
-            margin-top: 40px;
-            font-size: 0.9rem;
-            color: #555;
-        }
-
-        .signature-area {
-            margin-top: 40px;
-            display: flex;
-            justify-content: space-between;
-            font-weight: 600;
-        }
-
-        /* Print Settings */
-        @media print {
-            body {
-                background: none;
-                padding: 0;
-            }
-            .cv-container {
-                width: 100%;
-                box-shadow: none;
-                min-height: auto;
-            }
-            /* Ensure background colors print */
-            .sidebar {
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
-            }
-        }
-        
-        /* Responsive for mobile viewing */
-        @media (max-width: 768px) {
-            .cv-container {
-                grid-template-columns: 1fr;
-                width: 100%;
-                min-height: auto;
-            }
-            .sidebar {
-                padding: 20px;
-            }
-            .main-content {
-                padding: 20px;
-            }
-            .photo-frame {
-                margin-bottom: 20px;
-            }
-        }
-    </style>
+    /* Animation Controls */
+    .slider-container { display: flex; align-items: center; gap: 10px; }
+    input[type="range"] { flex: 1; }
+    
+    /* Main Area */
+    .main { flex: 1; display: flex; flex-direction: column; padding: 20px; overflow-y: auto; }
+    #plot { flex: 1; min-height: 500px; background: white; border-radius: 12px; border: 1px solid var(--border); box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
+    
+    .analysis { margin-top: 20px; background: white; padding: 20px; border-radius: 12px; border: 1px solid var(--border); }
+    .error { color: #dc2626; font-size: 0.9rem; font-weight: 500; }
+  </style>
 </head>
 <body>
 
-    <div class="cv-container">
-        <!-- Left Sidebar -->
-        <aside class="sidebar">
-            <!-- Photo Section -->
-            <div class="photo-frame">
-                <!-- IMPORTANT: Ensure your image file is named exactly 'bimal pass photo.jpg' -->
-                <img src="bimal pass photo.jpg" alt="Bimal Basnett" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
-                <div class="photo-placeholder-text" style="display:none; padding: 15px; font-size: 0.75rem;">
-                    Photo not visible?<br><br>
-                    Save this file and "bimal pass photo.jpg" in the same folder.
-                </div>
-            </div>
-
-            <div class="sidebar-section contact-info">
-                <h3 class="sidebar-title">Contact</h3>
-                <p><strong>Address:</strong><br>Lower Tanak, Temi Tarku,<br>Namchi, Sikkim</p>
-                <p><strong>Phone:</strong><br>+91 6295 055 872</p>
-                <p><strong>Nationality:</strong><br>Indian</p>
-            </div>
-
-            <div class="sidebar-section personal-info">
-                <h3 class="sidebar-title">Personal Info</h3>
-                <p><strong>DOB:</strong> 03 May 2003</p>
-                <p><strong>Languages:</strong><br>Nepali, English, Hindi</p>
-            </div>
-
-            <div class="sidebar-section skills">
-                <h3 class="sidebar-title">Skills</h3>
-                <span class="skill-tag">Mathematical Analysis</span>
-                <span class="skill-tag">Problem Solving</span>
-                <span class="skill-tag">Logical Reasoning</span>
-                <span class="skill-tag">Data Interpretation</span>
-            </div>
-
-             <div class="sidebar-section interests">
-                <h3 class="sidebar-title">Hobbies</h3>
-                <span class="skill-tag">Chess (Competitive)</span>
-                <span class="skill-tag">Strategic Games</span>
-            </div>
-        </aside>
-
-        <!-- Right Main Content -->
-        <main class="main-content">
-            <header class="header">
-                <h1 class="name">Bimal Basnett</h1>
-                <p class="tagline">B.Sc. Mathematics Graduate</p>
-            </header>
-
-            <section class="content-section">
-                <h2 class="section-title">Career Objective</h2>
-                <p class="objective-text">
-                    Analytical and disciplined Mathematics graduate with a strong academic track record. Eager to apply mathematical principles, logical reasoning, and problem-solving skills in a professional environment that encourages growth and challenges.
-                </p>
-            </section>
-
-            <section class="content-section">
-                <h2 class="section-title">Education</h2>
-                
-                <div class="education-item">
-                    <div class="edu-degree">B.Sc. Mathematics</div>
-                    <div class="edu-school">Sikkim Govt. College, Namchi (Sikkim University)</div>
-                    <div class="edu-meta">
-                        <span>Graduated</span>
-                        <span class="score-badge">CGPA: 8.11</span>
-                    </div>
-                </div>
-
-                <div class="education-item">
-                    <div class="edu-degree">Senior Secondary (Class XII) - PCMB</div>
-                    <div class="edu-school">Temi Senior Secondary School (CBSE)</div>
-                    <div class="edu-meta">
-                        <span>Completed</span>
-                        <span class="score-badge">78%</span>
-                    </div>
-                </div>
-
-                <div class="education-item">
-                    <div class="edu-degree">Secondary (Class X)</div>
-                    <div class="edu-school">Tarku Secondary School (CBSE)</div>
-                    <div class="edu-meta">
-                        <span>Completed</span>
-                        <span class="score-badge">71.4%</span>
-                    </div>
-                </div>
-
-                <div class="education-item">
-                    <div class="edu-degree">Junior High School</div>
-                    <div class="edu-school">Saipatri Sishu Mandir School</div>
-                    <div class="edu-meta">
-                        <span>Completed</span>
-                        <span>-</span>
-                    </div>
-                </div>
-            </section>
-
-            <section class="content-section">
-                <h2 class="section-title">Key Strengths</h2>
-                <ul style="padding-left: 20px; color: #444;">
-                    <li>Strong foundation in Calculus, Algebra, and Statistics.</li>
-                    <li>Excellent concentration and strategic planning skills developed through Chess.</li>
-                    <li>Consistent academic improvement and dedication to learning.</li>
-                </ul>
-            </section>
-
-            <section class="declaration">
-                <h2 class="section-title">Declaration</h2>
-                <p>I hereby declare that the information provided above is true and correct to the best of my knowledge and belief.</p>
-                
-                <div class="signature-area">
-                    <div>
-                        Date: ........................<br>
-                        Place: Namchi, Sikkim
-                    </div>
-                    <div style="text-align: right;">
-                        <br>
-                        (Bimal Basnett)
-                    </div>
-                </div>
-            </section>
-        </main>
+<div class="sidebar">
+  <div>
+    <h2>Graph Settings</h2>
+    <div class="control-group">
+      <label>Mode</label>
+      <select id="modeSelect" onchange="updateUI()">
+        <option value="cartesian">Cartesian y = f(x)</option>
+        <option value="parametric">Parametric (x(t), y(t))</option>
+        <option value="polar">Polar r = f(θ)</option>
+      </select>
     </div>
+  </div>
+
+  <div class="control-group">
+    <label>Function Library</label>
+    <select id="librarySelect" onchange="loadPreset()">
+      <option value="">-- Select a predefined function --</option>
+      <optgroup label="Real Mathematics">
+        <option value="cartesian|sin(x * k) * exp(-0.1 * x)">Damped Sine Wave</option>
+        <option value="cartesian|x^3 - k*x">Polynomial (Interactive k)</option>
+      </optgroup>
+      <optgroup label="Complex & Imaginary">
+        <option value="cartesian|exp(i * x * k)">Euler's Formula (e^ix)</option>
+        <option value="cartesian|sqrt(x * k)">Square Root (Handles Negatives)</option>
+      </optgroup>
+      <optgroup label="Advanced Geometries">
+        <option value="polar|sin(k * t)">Polar Rose Curve</option>
+        <option value="parametric|sin(k*t)|sin(t)">Lissajous Curve (Parametric)</option>
+      </optgroup>
+    </select>
+  </div>
+
+  <div id="inputsCartesian" class="control-group">
+    <label>f(x) =</label>
+    <input type="text" id="funcX" value="exp(i * x * k)" placeholder="e.g., sin(x)">
+  </div>
+
+  <div id="inputsParametric" class="control-group" style="display: none;">
+    <label>x(t) =</label>
+    <input type="text" id="funcParamX" value="sin(k*t)">
+    <label>y(t) =</label>
+    <input type="text" id="funcParamY" value="sin(t)">
+  </div>
+
+  <div class="control-group">
+    <label>Dynamic Parameter (k)</label>
+    <div class="slider-container">
+      <input type="range" id="kSlider" min="0.1" max="10" step="0.1" value="1" oninput="updateKValue(); renderPlot()">
+      <span id="kValue">1.0</span>
+    </div>
+    <div style="display: flex; gap: 5px;">
+      <button class="secondary" style="flex: 1;" onclick="toggleAnimation()" id="animBtn">Play Animation</button>
+    </div>
+  </div>
+
+  <button onclick="renderPlot()">Generate Graph</button>
+  <div id="errorBox" class="error"></div>
+</div>
+
+<div class="main">
+  <div id="plot"></div>
+  <div class="analysis">
+    <h2 style="margin-top:0;">Mathematical Analysis</h2>
+    <div id="mathDisplay"></div>
+  </div>
+</div>
+
+<script>
+  let animationId = null;
+  let isAnimating = false;
+  let animDirection = 1;
+
+  function updateUI() {
+    const mode = document.getElementById('modeSelect').value;
+    document.getElementById('inputsCartesian').style.display = (mode === 'cartesian' || mode === 'polar') ? 'flex' : 'none';
+    document.getElementById('inputsParametric').style.display = mode === 'parametric' ? 'flex' : 'none';
+    
+    if (mode === 'polar') {
+      document.querySelector('#inputsCartesian label').innerText = 'r(t) =';
+    } else if (mode === 'cartesian') {
+      document.querySelector('#inputsCartesian label').innerText = 'f(x) =';
+    }
+  }
+
+  function loadPreset() {
+    const val = document.getElementById('librarySelect').value;
+    if (!val) return;
+    const [mode, eq1, eq2] = val.split('|');
+    document.getElementById('modeSelect').value = mode;
+    updateUI();
+    
+    if (mode === 'parametric') {
+      document.getElementById('funcParamX').value = eq1;
+      document.getElementById('funcParamY').value = eq2;
+    } else {
+      document.getElementById('funcX').value = eq1;
+    }
+    renderPlot();
+  }
+
+  function updateKValue() {
+    document.getElementById('kValue').innerText = parseFloat(document.getElementById('kSlider').value).toFixed(1);
+  }
+
+  function toggleAnimation() {
+    isAnimating = !isAnimating;
+    document.getElementById('animBtn').innerText = isAnimating ? 'Stop Animation' : 'Play Animation';
+    if (isAnimating) animateFrame();
+  }
+
+  function animateFrame() {
+    if (!isAnimating) return;
+    let slider = document.getElementById('kSlider');
+    let val = parseFloat(slider.value);
+    
+    val += 0.05 * animDirection;
+    if (val >= 10 || val <= 0.1) animDirection *= -1; // Bounce back and forth
+    
+    slider.value = val;
+    updateKValue();
+    renderPlot(true);
+    animationId = requestAnimationFrame(animateFrame);
+  }
+
+  function renderPlot(isAnimatingFrame = false) {
+    const mode = document.getElementById('modeSelect').value;
+    const k = parseFloat(document.getElementById('kSlider').value);
+    const errorBox = document.getElementById('errorBox');
+    errorBox.innerText = '';
+
+    try {
+      const traces = [];
+      const step = 0.05;
+      
+      if (mode === 'cartesian') {
+        const expr = document.getElementById('funcX').value;
+        const compiled = math.compile(expr);
+        let xVals = [], yReal = [], yImag = [];
+        let hasImaginary = false;
+
+        for (let x = -10; x <= 10; x += step) {
+          try {
+            const y = compiled.evaluate({ x: x, k: k });
+            xVals.push(x);
+            
+            if (y && y.isComplex) {
+              hasImaginary = true;
+              yReal.push(y.re);
+              yImag.push(y.im);
+            } else if (typeof y === 'number') {
+              yReal.push(y);
+              yImag.push(null);
+            } else {
+              yReal.push(null); yImag.push(null);
+            }
+          } catch (e) { xVals.push(x); yReal.push(null); yImag.push(null); }
+        }
+
+        traces.push({ x: xVals, y: yReal, type: 'scatter', mode: 'lines', name: 'Real Part', line: { color: '#2563eb' } });
+        if (hasImaginary) {
+          traces.push({ x: xVals, y: yImag, type: 'scatter', mode: 'lines', name: 'Imaginary Part', line: { color: '#dc2626', dash: 'dot' } });
+        }
+        
+        if (!isAnimatingFrame) updateAnalysis(`f(x) = ${expr}`);
+
+      } else if (mode === 'parametric') {
+        const exprX = document.getElementById('funcParamX').value;
+        const exprY = document.getElementById('funcParamY').value;
+        const compX = math.compile(exprX);
+        const compY = math.compile(exprY);
+        let xVals = [], yVals = [];
+
+        for (let t = -10; t <= 10; t += step) {
+          xVals.push(compX.evaluate({ t: t, k: k }));
+          yVals.push(compY.evaluate({ t: t, k: k }));
+        }
+        traces.push({ x: xVals, y: yVals, type: 'scatter', mode: 'lines', name: 'Parametric', line: { color: '#16a34a' } });
+        if (!isAnimatingFrame) updateAnalysis(`x(t) = ${exprX} \\\\ y(t) = ${exprY}`);
+
+      } else if (mode === 'polar') {
+        const expr = document.getElementById('funcX').value;
+        const compiled = math.compile(expr);
+        let rVals = [], thetaVals = [];
+
+        for (let t = 0; t <= 2 * Math.PI * 4; t += 0.02) {
+          rVals.push(compiled.evaluate({ t: t, k: k }));
+          thetaVals.push(t * (180 / Math.PI)); // Plotly requires degrees for polar
+        }
+        traces.push({ r: rVals, theta: thetaVals, type: 'scatterpolar', mode: 'lines', name: 'Polar', line: { color: '#9333ea' } });
+        if (!isAnimatingFrame) updateAnalysis(`r(\\theta) = ${expr.replace(/t/g, '\\theta')}`);
+      }
+
+      const layout = {
+        title: false,
+        margin: { t: 30, b: 40, l: 40, r: 20 },
+        xaxis: { zerolinecolor: '#cbd5e1', gridcolor: '#f1f5f9' },
+        yaxis: { zerolinecolor: '#cbd5e1', gridcolor: '#f1f5f9' },
+        polar: { radialaxis: { visible: true }, angularaxis: { visible: true } },
+        showlegend: true
+      };
+
+      // Use Reactivity for smoother animation
+      if (isAnimatingFrame) {
+        Plotly.react('plot', traces, layout);
+      } else {
+        Plotly.newPlot('plot', traces, layout);
+      }
+
+    } catch (err) {
+      if (!isAnimatingFrame) errorBox.innerText = 'Syntax Error. Use standard math formatting.';
+    }
+  }
+
+  function updateAnalysis(texString) {
+    try {
+      const parsed = math.parse(texString.split('=')[1] || texString).toTex();
+      katex.render(`\\text{Current Equation: } ${texString}`, document.getElementById('mathDisplay'), { throwOnError: false });
+    } catch (e) {
+      document.getElementById('mathDisplay').innerHTML = `<code>${texString}</code>`;
+    }
+  }
+
+  window.onload = () => { updateUI(); renderPlot(); };
+</script>
 
 </body>
 </html>
